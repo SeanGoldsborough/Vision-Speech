@@ -14,13 +14,13 @@ import AVFoundation
 struct ContentView: View {
     @StateObject private var viewModel = VisionSpeechViewModel()
     @State private var showPicker = false
-    
+
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
                 header
-                
-                
+
+
                 ScrollView {
                     VStack(spacing: 20) {
                         cameraCard
@@ -36,11 +36,11 @@ struct ContentView: View {
             }
         }
     }
-    
-    
+
+
     // MARK: - UI Sections
-    
-    
+
+
     private var header: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text("Vision + Speech OCR")
@@ -53,8 +53,8 @@ struct ContentView: View {
         .padding()
         .background(Color(.systemBackground))
     }
-    
-    
+
+
     private var cameraCard: some View {
         VStack(spacing: 12) {
             ZStack {
@@ -75,8 +75,8 @@ struct ContentView: View {
             .frame(height: 220)
             .clipped()
             .cornerRadius(14)
-            
-            
+
+
             Button {
                 showPicker = true
             } label: {
@@ -87,14 +87,14 @@ struct ContentView: View {
         }
         .cardStyle()
     }
-    
-    
+
+
     private var textCard: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Recognized Text")
                 .font(.headline)
-            
-            
+
+
         }
     }
     private var controls: some View {
@@ -105,8 +105,8 @@ struct ContentView: View {
                 Label("Voice Command", systemImage: "mic.fill")
             }
             .buttonStyle(.bordered)
-            
-            
+
+
             Button {
                 viewModel.stopListening()
             } label: {
@@ -117,7 +117,8 @@ struct ContentView: View {
     }
 }
 
-
 #Preview {
     ContentView()
 }
+
+
