@@ -6,56 +6,50 @@
 //
 
 import SwiftUI
-import SwiftData
+import Vision
+import Speech
+import AVFoundation
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @StateObject private var viewModel = VisionSpeechViewModel()
 
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+        NavigationView {
+            VStack(spacing: 16) {
+                Text("Vision + Speech OCR")
+                    .font(.largeTitle)
+                    .bold()
+
+                CameraView(image: $viewModel.capturedImage)
+                    .frame(height: 300)
+                    .cornerRadius(12)
+
+                Text("Recognized Text")
+                    .font(.headline)
+
+                ScrollView {
+                    Text(viewModel.recognizedText)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding()
+                }
+                .background(Color.gray.opacity(0.1))
+                .cornerRadius(8)
+
+                HStack {
+                    Button("Start Voice Command") {
+                        viewModel.startListening()
+                    }
+                    Button("Stop") {
+                        viewModel.stopListening()
                     }
                 }
-                .onDelete(perform: deleteItems)
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-        } detail: {
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
+            .padding()
         }
     }
 }
 
+
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
 }
