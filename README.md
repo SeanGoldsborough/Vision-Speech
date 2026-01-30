@@ -36,15 +36,6 @@ Screenshots
 <img width="300" height="450" alt="simulator_screenshot_93932EF5-1895-4070-8E12-48AA41FBA4FF" src="https://github.com/user-attachments/assets/776e268c-ccde-4811-bbae-679fe6e7aac5" />
 
 
-Permissions Required
-
-Add to Info.plist:
-
-NSCameraUsageDescription
-
-NSMicrophoneUsageDescription
-
-NSSpeechRecognitionUsageDescription
 
 
 Use Cases
